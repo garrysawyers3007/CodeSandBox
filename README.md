@@ -1,12 +1,27 @@
-# React + Vite
+React Typewriter App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React application that fetches a hidden text string from a URL and displays it with a typewriter animation. The app is built using only native browser APIs and React hooks, without any external libraries.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Data Fetching:** Makes a network request to a specified URL using the `fetch` API.
 
-## Expanding the ESLint configuration
+* **Loading State:** Displays a "Loading..." message while waiting for the data to be fetched.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* **Typewriter Animation:** Reveals the fetched text character by character with a half-second delay between each.
+
+* **Dynamic Rendering:** Renders the animated text as a list of characters (`<li>` elements).
+
+***
+
+## How it Works
+
+The application is structured into a single `App` component that manages its state using React hooks.
+
+1.  **Fetching Data (`useEffect`):** On component mount, a `useEffect` hook triggers an asynchronous `fetch` request to the URL. It uses `DOMParser` to parse the incoming HTML and extract the text from the `<body>` element.
+
+2.  **Animation (`useEffect`):** A second `useEffect` hook watches for changes in the `fullText` state. Once the text is available, it starts a recursive `setTimeout` loop that adds one character to the `charArray` state every 500 milliseconds.
+
+3.  **Rendering:** The component's render function conditionally displays a loading message or an unordered list (`<ul>`). It uses the `.map()` function to iterate over the `charArray` and render each character as a list item, creating the typewriter effect in real-time.
+
+***
